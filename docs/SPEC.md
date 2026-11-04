@@ -142,7 +142,9 @@ normalized failing output.
 Filters applied after firing:
 - `status` must be active.
 - `engines`: if non-empty and `detectEngines(cwd or file dir)` returned at least one
-  engine and the sets do not intersect → drop. Unknown stack → keep.
+  engine and the sets do not intersect → drop. Unknown stack → keep. Engine names
+  mentioned in the prompt (`unity'de`, `godot`, `ue5`…) override cwd detection and count
+  as one extra keyword. Lessons matched by an `errors` string skip this filter.
 - `projects`: if non-empty and a concrete project dir is known (edit, post-tool,
   session-start) and none of the substrings occur in the normalized path → drop.
   The prompt hook ignores `projects` unless cwd itself matches one (boost only).

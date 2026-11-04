@@ -1,3 +1,12 @@
+<p align="center"><img src="docs/assets/banner.svg" alt="multi-lesson-path: Lessons that find you." width="100%"></p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License: MIT">
+  <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen" alt="Node.js 18 or newer">
+  <img src="https://img.shields.io/badge/dependencies-zero-success" alt="Zero dependencies">
+  <img src="https://img.shields.io/badge/Claude%20Code-hooks-8A2BE2" alt="Claude Code hooks">
+</p>
+
 # multi-lesson-path
 
 Lessons that find you: cross-project memory for Claude Code, delivered by hooks.
@@ -15,32 +24,19 @@ The usual workaround is a memory file or a notes folder with a line such as "che
 
 multi-lesson-path moves the reading out of the agent's hands. Lessons are small files with explicit triggers. Hooks, which Claude Code runs deterministically on fixed events, decide when a lesson is relevant and add it to the context at that moment.
 
+## What it looks like
+
+When Claude is about to edit a file that a lesson covers, the lesson arrives before the edit:
+
+<p align="center"><img src="docs/assets/demo-edit-hook.svg" alt="Claude is about to edit viewmodel.gd; the matching lesson is injected as context" width="100%"></p>
+
+When a command fails with a known error, the lesson arrives right after the failure:
+
+<p align="center"><img src="docs/assets/demo-failing-command.svg" alt="A failing python command triggers an injected lesson" width="100%"></p>
+
 ## How it works
 
-```
-  you send a prompt / Claude edits a file / a shell command fails
-                              |
-                              v
-  +-----------------------------------------------------------+
-  | Claude Code hook event                                    |
-  |   UserPromptSubmit | PreToolUse (edit) | PostToolUse     |
-  |   (shell failure) | SessionStart                          |
-  +-----------------------------------------------------------+
-                              | hook JSON on stdin
-                              v
-  +-----------------------------------------------------------+
-  | mlp hook <kind>                                           |
-  |   normalize text (Turkish-safe folding, lowercase)        |
-  |   match lessons: keywords | strong phrases | path globs  |
-  |                  | error substrings                      |
-  |   drop: retired, wrong engine, wrong project,             |
-  |         already shown in this session                     |
-  |   rank, keep the best 3, cut to the character budget      |
-  +-----------------------------------------------------------+
-                              | additionalContext (or nothing)
-                              v
-  the agent's context for this turn: "[multi-lesson-path] ..."
-```
+<p align="center"><img src="docs/assets/how-it-works.svg" alt="Hook events go through the matcher; matching lessons are injected as context" width="100%"></p>
 
 Key properties:
 
@@ -68,6 +64,10 @@ Check that retrieval works with a dry run. It shows matches, scores and reasons 
 ```bash
 mlp check --prompt "python was not found after install"
 ```
+
+Example dry runs against the bundled example lessons:
+
+<p align="center"><img src="docs/assets/demo-check.svg" alt="mlp check shows which lessons match, with scores and reasons" width="100%"></p>
 
 Create your first lesson:
 
@@ -116,6 +116,8 @@ The body is free Markdown. The convention of three labelled parts (**Didn't work
 Full field reference, matching rules and ranking: [docs/lesson-format.md](docs/lesson-format.md). Example lessons: [examples/lessons/](examples/lessons/).
 
 ## Capture: turning past sessions into lessons
+
+<p align="center"><img src="docs/assets/capture-pipeline.svg" alt="Capture pipeline: archive, harvest, distill, human review, lessons" width="100%"></p>
 
 Writing lessons by hand works, but most useful lessons are already in past sessions. The capture pipeline helps find them:
 

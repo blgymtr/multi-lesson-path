@@ -254,3 +254,12 @@ test('an engine named in the prompt counts as a keyword and overrides cwd detect
   const r = evaluate([lesson, g], { text: "unity'de karakterin sol kolu kayboldu", cwd: process.cwd() });
   assert.deepStrictEqual(r.map((x) => x.lesson.id), ['u-bones']);
 });
+
+test('engine filters do not drop lessons matched by an error string, but still apply to path globs', () => {
+  const { evaluate } = require('../lib/match');
+  const py = { id: 'py-alias', title: 't', body: 'b', status: 'active', engines: ['python'], errors: ['Python was not found'] };
+  const vm = { id: 'vm', title: 't', body: 'b', status: 'active', engines: ['godot'], paths: ['**/*viewmodel*'] };
+  // cwd is this repo, which detects as a node project
+  assert.deepStrictEqual(evaluate([py], { error: 'Python was not found; run without arguments', cwd: process.cwd() }).map((x) => x.lesson.id), ['py-alias']);
+  assert.deepStrictEqual(evaluate([vm], { file: process.cwd() + '/src/viewmodel.js', cwd: process.cwd() }).map((x) => x.lesson.id), []);
+});
