@@ -209,11 +209,17 @@ Arşivde ne olduğu, neyin şifrelenip neyin şifrelenmediği ve nasıl silinece
 
 İkisi birlikte kullanılabilir. Kancalar neyin gönderileceğine karar verir; araç, kasıtlı aramalar için yine de faydalı olabilir.
 
+## Test sonuçları
+
+<p align="center"><img src="docs/assets/results-overview.tr.svg" alt="Test sonuçları: 84 testin 84'ü geçiyor; 68 dersle kanca başına 39-49 ms (bunun 33 ms'si Node başlangıcı), 300 dersle 62-65 ms; dersler Claude Code içinde UserPromptSubmit, PreToolUse ve PostToolUse için canlı doğrulandı; 10 ilgisiz mesajın hiçbiri ders tetiklemedi" width="900"></p>
+
+Neyin, nasıl test edildiği ve ne çıktığı; gerçek oturumlarda toplama hattının sayıları ve aracı kendi üzerinde kullanırken bulunan yedi sorun: [docs/RESULTS.tr.md](docs/RESULTS.tr.md).
+
 ## Token tasarrufu sağlıyor mu?
 
 Bazen. Bu tasarruf çoğunlukla çalışmaları kısaltmaktan değil, başarısız denemeleri önlemekten gelir. Küçük bir A/B kıyaslaması yaptık: altı küçük Node.js projesi, bunların beşinde bir "önceki oturumda" çözülmüş, açık olmayan bir tuzak vardı; altıncısı ise ilgili dersi olmayan bir kontrol görevdi. Her görev, Claude Haiku ile başsız (headless) modda beş kez kancalar kapalıyken ve beş kez açıkken çalıştırıldı (toplam 60 çalıştırma).
 
-<p align="center"><img src="docs/assets/token-cost.svg" alt="A/B kıyaslaması: toplam maliyet kapalıyken $0.1610, açıkken $0.1551 (-%3.7), 30 görevin 26'sı çözüldü ve 30'u çözüldü, çözülen görev başına maliyet $0.0062 ve $0.0052 (-%16.5), altı görev için görev başına medyan maliyetle" width="900"></p>
+<p align="center"><img src="docs/assets/token-cost.tr.svg" alt="A/B kıyaslaması: toplam maliyet kapalıyken $0.1610, açıkken $0.1551 (-%3.7), 30 görevin 26'sı çözüldü ve 30'u çözüldü, çözülen görev başına maliyet $0.0062 ve $0.0052 (-%16.5), altı görev için görev başına medyan maliyetle" width="900"></p>
 
 | | Kancalar kapalı | Kancalar açık | Değişim |
 |---|---|---|---|
@@ -257,6 +263,8 @@ Bu komut, yalnızca multi-lesson-path'in Claude Code ayarlarındaki kanca girdil
 - [docs/capture.md](docs/capture.md): arşiv, hasat, damıtma, kabul
 - [docs/privacy.md](docs/privacy.md): neyin, nerede saklandığı ve neyin asla gönderilmediği
 - [docs/faq.md](docs/faq.md): sık sorulan sorular
+- [docs/RESULTS.tr.md](docs/RESULTS.tr.md): test sonuçları, toplama hattı sayıları, kullanırken bulunan sorunlar ([English](docs/RESULTS.md))
+- [benchmarks/token-cost/RESULTS.md](benchmarks/token-cost/RESULTS.md): token maliyeti A/B kıyaslaması (İngilizce)
 - [CONTRIBUTING.md](CONTRIBUTING.md): geliştirme ortamı ve katkı kuralları
 - [CHANGELOG.md](CHANGELOG.md): sürüm geçmişi
 

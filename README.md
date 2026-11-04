@@ -209,6 +209,12 @@ What the archive contains, what is and is not encrypted, and how to delete it: [
 
 The two can be used together. Hooks decide what is pushed; a tool can still be useful for deliberate searches.
 
+## Test results
+
+<p align="center"><img src="docs/assets/results-overview.svg" alt="Test results: 84 of 84 tests pass; hook latency 39 to 49 ms per call with 68 lessons (33 ms of it is Node startup) and 62 to 65 ms with 300 lessons; lessons verified live in Claude Code for UserPromptSubmit, PreToolUse and PostToolUse; 0 of 10 unrelated prompts triggered a lesson" width="900"></p>
+
+What was tested, how, and what came out, including the capture pipeline on real sessions and the seven problems found by using the tool on itself: [docs/RESULTS.md](docs/RESULTS.md).
+
 ## Does it save tokens?
 
 Sometimes, and mostly by preventing failed attempts, not by making runs shorter. We ran a small A/B benchmark: six tiny Node.js projects, five of them with one non-obvious gotcha that a "previous session" had already solved, plus one control task with no relevant lesson. Each task ran headless with Claude Haiku five times with the hooks disabled and five times enabled (60 runs in total).
@@ -257,6 +263,8 @@ This removes only multi-lesson-path's hook entries from your Claude Code setting
 - [docs/capture.md](docs/capture.md): archive, harvest, distill, accept
 - [docs/privacy.md](docs/privacy.md): what is stored, where, and what is never sent
 - [docs/faq.md](docs/faq.md): common questions
+- [docs/RESULTS.md](docs/RESULTS.md): test results, capture pipeline numbers, problems found by dogfooding ([Türkçe](docs/RESULTS.tr.md))
+- [benchmarks/token-cost/RESULTS.md](benchmarks/token-cost/RESULTS.md): token-cost A/B benchmark
 - [CONTRIBUTING.md](CONTRIBUTING.md): development setup and rules for contributions
 - [CHANGELOG.md](CHANGELOG.md): release history
 
