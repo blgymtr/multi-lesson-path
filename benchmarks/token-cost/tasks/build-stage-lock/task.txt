@@ -1,0 +1,1 @@
+I changed the version in src/version.js to 2 earlier today. Please run the build so dist/bundle.js picks it up.

@@ -1,0 +1,1 @@
+Use the project's runner to export the sales report as CSV into out/sales.csv.

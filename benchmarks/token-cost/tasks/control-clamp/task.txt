@@ -1,0 +1,1 @@
+Add a clamp(value, min, max) helper to src/mathutil.js and export it next to the existing helpers.

@@ -7,6 +7,8 @@
   <img src="https://img.shields.io/badge/Claude%20Code-hooks-8A2BE2" alt="Claude Code hooks">
 </p>
 
+<p align="center"><b>Language:</b> English · <a href="README.tr.md">Türkçe</a></p>
+
 # multi-lesson-path
 
 Lessons that find you: cross-project memory for Claude Code, delivered by hooks.
@@ -207,6 +209,29 @@ What the archive contains, what is and is not encrypted, and how to delete it: [
 
 The two can be used together. Hooks decide what is pushed; a tool can still be useful for deliberate searches.
 
+## Does it save tokens?
+
+Sometimes, and mostly by preventing failed attempts, not by making runs shorter. We ran a small A/B benchmark: six tiny Node.js projects, five of them with one non-obvious gotcha that a "previous session" had already solved, plus one control task with no relevant lesson. Each task ran headless with Claude Haiku five times with the hooks disabled and five times enabled (60 runs in total).
+
+<p align="center"><img src="docs/assets/token-cost.svg" alt="A/B benchmark: total cost $0.1610 off vs $0.1551 on (-3.7%), 26/30 vs 30/30 tasks solved, cost per solved task $0.0062 vs $0.0052 (-16.5%), with median cost per task for six tasks" width="900"></p>
+
+| | Hooks off | Hooks on | Change |
+|---|---|---|---|
+| Tasks solved | 26 / 30 | 30 / 30 | +4 |
+| Total cost | $0.1610 | $0.1551 | −3.7% |
+| Total tokens | 7.15 M | 6.72 M | −5.9% |
+| Total turns | 266 | 229 | −13.9% |
+| **Cost per solved task** | **$0.0062** | **$0.0052** | **−16.5%** |
+
+How to read it:
+
+- **The clear effect is success, not price.** On `build-stage-lock` (a cryptic error code whose fix is buried in a long doc) the agent solved 1 of 5 runs without the lesson and 5 of 5 with it. Those runs cost a little more, because they kept going until the work was done.
+- **Per-task cost differences are mostly noise at this size.** The control task got no lesson in any run and still came out 15% cheaper in the "on" group. Treat differences within about ±20% on one task as run-to-run variance.
+- **Matching is not perfect.** On `generated-routes` the lesson never fired, because the agent never edited the generated file that the lesson's path glob watches.
+- **Overhead is small when nothing matches:** no text is added at all.
+
+Full method, per-task tables and limitations: [benchmarks/token-cost/RESULTS.md](benchmarks/token-cost/RESULTS.md). Raw results are in `benchmarks/token-cost/results/`. Rerun it yourself with `node benchmarks/token-cost/run.js --reps 5` (see [benchmarks/token-cost/README.md](benchmarks/token-cost/README.md)).
+
 ## Limitations
 
 - **Matching is lexical, not semantic.** Lessons match when the words in the prompt, the path, or the error output match the lesson's keywords. A problem described in very different words will not match until a keyword is added. Write keywords the way you and the agent will describe the problem, in more than one language if you work in several.
@@ -215,7 +240,7 @@ The two can be used together. Hooks decide what is pushed; a tool can still be u
 - **Hook timing.** Hooks are designed to finish in under 150 ms with about 300 lessons. Very large lesson sets or a slow disk can exceed that.
 - **Depends on Claude Code's hook interface.** The five hook events and their JSON shapes come from Claude Code. If that interface changes, `mlp doctor` and the hook error log are the first places to look.
 - **Transcript format.** Harvest reads Claude Code's session transcript format. Unrecognized lines are skipped, but the episode detection is only as good as the format it sees.
-- **No benchmarks.** This project does not publish measurements of how often lessons help. Use `mlp stats` and `mlp review` on your own data.
+- **Small benchmark only.** The token benchmark below is synthetic and small. Use `mlp stats` and `mlp review` to see how lessons behave on your own data.
 
 ## Uninstall
 

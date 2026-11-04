@@ -1,0 +1,5 @@
+[
+  { "region": "north", "units": 120, "price": 2.5 },
+  { "region": "south", "units": 80, "price": 4 },
+  { "region": "east", "units": 45, "price": 10 }
+]

@@ -1,0 +1,4 @@
+[
+  { "method": "GET", "path": "/", "status": 200, "body": "welcome" },
+  { "method": "GET", "path": "/about", "status": 200, "body": "about us" }
+]

@@ -1,0 +1,1 @@
+Add a /health endpoint to the app that responds with the text "ok".

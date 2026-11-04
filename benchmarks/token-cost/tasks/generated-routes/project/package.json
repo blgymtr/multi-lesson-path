@@ -1,0 +1,6 @@
+{
+  "name": "demo-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "start": "node scripts/gen-routes.js && node src/app.js" }
+}
