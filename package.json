@@ -1,0 +1,17 @@
+{
+  "name": "multi-lesson-path",
+  "version": "0.1.0",
+  "description": "Cross-project lesson memory for Claude Code, pulled into context by hooks.",
+  "license": "MIT",
+  "bin": {
+    "mlp": "bin/mlp.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node scripts/run-tests.js",
+    "setup-dev": "node scripts/setup-dev.js",
+    "privacy-check": "node scripts/privacy-check.js"
+  }
+}

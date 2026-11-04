@@ -1,0 +1,18 @@
+{
+  "model": "opus",
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "node \"/opt/other-tool/start.js\"", "timeout": 10 } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "node \"/opt/other-tool/stop.js\"" } ] }
+    ],
+    "PreCompact": [
+      { "hooks": [ { "type": "command", "command": "node \"/opt/other-tool/compact.js\"" } ] }
+    ],
+    "SessionEnd": [
+      { "hooks": [ { "type": "command", "command": "node \"/opt/other-tool/end.js\"" } ] }
+    ]
+  },
+  "permissions": { "allow": ["Bash(ls:*)"] }
+}
